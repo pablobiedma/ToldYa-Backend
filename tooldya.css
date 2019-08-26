@@ -42,7 +42,8 @@ body {
 }
 
 .my-pagearea{
-    margin-left: 20px;
+    margin: auto;
+    text-align: center;
 }
 
 
@@ -60,6 +61,7 @@ body {
     padding: 10px 20px;
     border: 1px solid #aaa;
     resize: none;
+    text-align: center;
 }
 
 .profile-menu{
