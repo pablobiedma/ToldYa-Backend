@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<title>JQuery Test</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	// Get values
+	function go()
+	{
+		var field1 = $("#field1").val();
+		var field2 = $("#field2").val();
+		var field3 = $("#field3").val();
+
+	    console.log(field1);
+	    console.log(field2);
+	    console.log(field3);
+				
+		var privateKey = new bitcore.PrivateKey(field1); //we add our private key here 
+		var utxo = {
+		  "txId" : "",
+		  "outputIndex" : 0,
+		  "address" : field3,  //receiver address (public key)
+		  "script" : "",  
+		  "satoshis" : 50000
+		};
+
+		var transaction = new bitcore.Transaction()
+		    .from(utxo)
+		    .addData(field1) // Add OP_RETURN data
+		    .sign(privateKey);
+	}
+</script>
+
+<div id="content">
+  <input type="text" id="field1" placeholder="Message">
+  <input type="text" id="field2" placeholder="Private key">
+  <input type="text" id="field3" placeholder="Destination address">
+  <button type="button" id="btn" onclick="go()">Go</button>
+</div>
+
+<h1>JQuery Test</h1>
