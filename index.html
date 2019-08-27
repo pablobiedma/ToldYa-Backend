@@ -37,29 +37,21 @@
 <body>
 	<script type="text/javascript">
 	// Get values
+	// Get values
 	function go()
 	{
-		var field1 = $("#field1").val();
-		var field2 = $("#field2").val();
-		var field3 = $("#field3").val();
-
-	    console.log(field1);
-	    console.log(field2);
-	    console.log(field3);
-				
-		var privateKey = new bitcore.PrivateKey(field1); //we add our private key here 
-		var utxo = {
-		  "txId" : "",
-		  "outputIndex" : 0,
-		  "address" : field3,  //receiver address (public key)
-		  "script" : "",  
-		  "satoshis" : 50000
-		};
-
-		var transaction = new bitcore.Transaction()
-		    .from(utxo)
-		    .addData(field1) // Add OP_RETURN data
-		    .sign(privateKey);
+		var private = $("#private").val();
+		var public = $("#public").val();
+		var message = $("#message").val();
+	    console.log(private);
+	    console.log(public);
+	    console.log(message);
+		$.ajax(
+	      {
+	        url: "http://localhost:1337/api",
+	        type: "GET",
+	        data:{private:private, public:public, message:message},
+	      });
 	}
 </script>
 
@@ -74,17 +66,17 @@
 					</span>
 
 					<div class="wrap-input2 validate-input" data-validate="Name is required">
-						<input class="input2" id="field1" type="text" name="name">
+						<input class="input2" id="private" type="text" name="name">
 						<span class="focus-input2" data-placeholder="YOUR PRIVATE KEY"></span>
 					</div>
 
 					<div class="wrap-input2 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input2" id="field2" type="text" name="email">
+						<input class="input2" id="public" type="text" name="email">
 						<span class="focus-input2" data-placeholder="YOUR PARTNER'S PUBLIC KEY"></span>
 					</div>
 
 					<div class="wrap-input2 validate-input" data-validate = "Message is required">
-						<textarea class="input2" id="field3" name="message"></textarea>
+						<textarea class="input2" id="message" name="message"></textarea>
 						<span class="focus-input2" data-placeholder="MESSAGE"></span>
 					</div>
 
