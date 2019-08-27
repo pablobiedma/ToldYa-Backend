@@ -1,7 +1,5 @@
 # ToooldYa
 
-Node.js server: express
-
 1. Install NodeJS here: https://nodejs.org/en/
 
 2. Create a new folder.
