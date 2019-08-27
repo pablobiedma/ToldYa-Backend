@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>toooldya</title>
-    <link rel="stylesheet" href="css/tooldya.css" />
-
+    <link rel="stylesheet" href="tooldya.css" />
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="transaction.js"></script>
 </head>
 
 <body>
@@ -26,16 +27,18 @@
 </section>
 <br><br>
 <!--<div style="text-align:center">-->
-<section class="my-pagearea">
-    <textarea id="message" class="my-textarea" placeholder="Your message"></textarea>
+    <section class="my-pagearea">
+        <!--<textarea id="message" class="my-textarea" placeholder="Your message"></textarea>
     <textarea id="private_key" class="my-textarea" placeholder="Your private key"></textarea>
-    <textarea id="public_key" class="my-textarea" placeholder="Your partners public key"></textarea>
-    <br><br>
-</section>
+    <textarea id="public_key" class="my-textarea" placeholder="Your partners public key"></textarea>-->
+        <label for="private">Your Private Key: </label><input id="private" type="text" /> <br /> <br />
+        <label for="public">Your Partner's Public Key: </label><input id="public" type="text" /> <br /> <br />
+        <label for="message">Message: </label><input id="message" type="text" /> <br /> <br />
+        <button id="submit">Submit</button>
+    </section>
 <!--</div>-->
 
 <div style="text-align:center">
-    <button id="go-button">save for eternity</button>
     <br><br>
     <button id="prove-button" onclick="window.location.href = 'https://blockchain.com';">prove your integrity</button>
 </div>
@@ -56,6 +59,7 @@ Fee: 0,0005 BTC
 <footer>
     <center>&copy; ICSSS 2019<br>Team: told ya</center>
 </footer>
+
 </body>
 
 
