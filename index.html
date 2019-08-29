@@ -30,34 +30,57 @@
 	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!-- <location path="css">
+        <system.web>
+            <authorization>
+                <allow users="*" />
+            </authorization>
+        </system.web>
+    </location> -->
 <!--===============================================================================================-->
 
 </head>
 <body>
 	<script type="text/javascript">
 	// Get values
-	// Get values
-	function go()
+	function btc()
 	{
 		var private = $("#private").val();
-		var public = $("#public").val();
 		var message = $("#message").val();
+		// var field3 = $("#field3").val();
 	    console.log(private);
-	    console.log(public);
 	    console.log(message);
+	    // console.log(field3);
 		$.ajax(
 	      {
 	        url: "http://localhost:1337/api",
 	        type: "GET",
-	        data:{private:private, public:public, message:message},
+	        data:{private:private, message:message, crypto:"btc"},
 	      });
 	}
+	// Get values ltc commented out for the moment 
+	// function ltc()
+	// {
+	// 	var private = $("#private").val();
+	// 	var message = $("#message").val();
+	// 	// var field3 = $("#field3").val();
+	//     console.log(private);
+	//     console.log(message);
+	//     // console.log(field3);
+	// 	$.ajax(
+	//       {
+	//         url: "http://localhost:1337/api",
+	//         type: "GET",
+	//         data:{private:private, message:message, crypto:"ltc"},
+	//       });
+	// }
 </script>
 
 <div id="content">
 </div>
-<div class="bg-contact2" style="background-image: url('images/bg-01.jpg');">
+<div class="bg-contact2" style="background-image: url('images/bg.jpg');">
 		<div class="container-contact2">
 			<div class="wrap-contact2">
 				<form class="contact2-form validate-form">
@@ -66,14 +89,14 @@
 					</span>
 
 					<div class="wrap-input2 validate-input" data-validate="Name is required">
-						<input class="input2" id="private" type="text" name="name">
+						<input class="input2" id="private" type="password" name="name">
 						<span class="focus-input2" data-placeholder="YOUR PRIVATE KEY"></span>
 					</div>
 
-					<div class="wrap-input2 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<!-- <div class="wrap-input2 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<input class="input2" id="public" type="text" name="email">
 						<span class="focus-input2" data-placeholder="YOUR PARTNER'S PUBLIC KEY"></span>
-					</div>
+					</div> -->
 
 					<div class="wrap-input2 validate-input" data-validate = "Message is required">
 						<textarea class="input2" id="message" name="message"></textarea>
@@ -86,11 +109,18 @@
 							<button id="btn" class="contact2-form-btn">
 								Save for eternity
 							</button>
-							
+									
 						</div>
-						
+						<p id="linkedindo"><a href="https://www.blockchain.com/explorer">Prove your integrity</a></p>
+						<br></br>
+					<div><br></br>
+							<h5><p>The price of winning your argument: 0.000505 BTC (incl. fee)</p></h5>
+							 <!-- <button type="button" id="btn" onclick="btc()">BTC</button>
+  <button type="button" id="btn" onclick="ltc()">LTC</button> -->
+						</div>
+												
 				</form>
-				<p id="linkedindo"><a href="https://www.blockchain.com/explorer">Prove your integrity</a></p>
+		
 					</div>
 			</div>
 		</div>

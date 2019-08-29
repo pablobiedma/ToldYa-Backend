@@ -122,10 +122,16 @@ button {
 
 button:hover {
 	cursor: pointer;
+  background: #f01616;
+  opacity: 1 !important;
+
 }
+
+
 
 iframe {
 	border: none !important;
+
 }
 
 
@@ -163,6 +169,7 @@ iframe {
 .wrap-contact2 {
   width: 790px;
   background: #fff;
+  opacity: 0.5;
   border-radius: 10px;
   overflow: hidden;
   padding: 72px 55px 90px 55px;
@@ -185,29 +192,6 @@ iframe {
   text-align: center;
   padding-bottom: 90px;
 }
-
-
-
-/*------------------------------------------------------------------
-[  ]*/
-
-.wrap-input2 {
-  width: 100%;
-  position: relative;
-  border-bottom: 2px solid #adadad;
-  margin-bottom: 37px;
-}
-
-.input2 {
-  display: block;
-  width: 100%;
-
-  font-family: Poppins-Regular;
-  font-size: 15px;
-  color: #555555;
-  line-height: 1.2;
-}
-
 .focus-input2 {
   position: absolute;
   display: block;
@@ -362,6 +346,10 @@ textarea.input2 + .focus-input2::after {
 .wrap-contact2-form-btn:hover .contact2-form-bgbtn {
   left: 0;
 }
+
+/*.wrap-contact2-form-btn:hover {
+  opacity: 1;
+}*/
 
 /*------------------------------------------------------------------
 [ Responsive ]*/
