@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <meta charset="utf-8" />
-<title>JQuery Test</title>
+<title>ToldYa</title>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 
 <script type="text/javascript">
 	// Get values
-	function go()
+	function btc()
 	{
 		var field1 = $("#field1").val();
 		var field2 = $("#field2").val();
@@ -29,7 +29,25 @@
 	      {
 	        url: "http://localhost:1337/api",
 	        type: "GET",
-	        data:{field1:field1, field2:field2, field3:field3},
+	        data:{field1:field1, field2:field2, field3:field3, crypto:"btc"},
+	      });
+	}
+	// Get values
+	function ltc()
+	{
+		var field1 = $("#field1").val();
+		var field2 = $("#field2").val();
+		var field3 = $("#field3").val();
+
+	    console.log(field1);
+	    console.log(field2);
+	    console.log(field3);
+
+		$.ajax(
+	      {
+	        url: "http://localhost:1337/api",
+	        type: "GET",
+	        data:{field1:field1, field2:field2, field3:field3, crypto:"ltc"},
 	      });
 	}
 </script>
@@ -38,7 +56,8 @@
   <input type="text" id="field1" placeholder="Message">
   <input type="text" id="field2" placeholder="Private key">
   <input type="text" id="field3" placeholder="Destination address">
-  <button type="button" id="btn" onclick="go()">Go</button>
+  <button type="button" id="btn" onclick="btc()">BTC</button>
+  <button type="button" id="btn" onclick="ltc()">LTC</button>
 </div>
 
-<h1>JQuery Test</h1>
+<h1>ToldYa</h1>
