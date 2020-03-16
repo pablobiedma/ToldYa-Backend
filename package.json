@@ -1,17 +1,34 @@
 {
-  "name": "Desktop",
+  "name": "node-api",
   "version": "1.0.0",
   "description": "",
-  "main": "jquery-3.1.0.min.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bitcoindRegtest": "cd bitcoin-0.19.0.1/bin && ./bitcoind -regtest",
+    "serverRegtest": "network=regtest nodemon server.js",
+    "bitcoindTestnet": "cd bitcoin-0.19.0.1/bin && ./bitcoind -testnet",
+    "serverTestnet": "network=testnet nodemon server.js",
+    "bitcoindMainnet": "cd bitcoin-0.19.0.1/bin && ./bitcoind",
+    "serverMainnet": "network=mainnet nodemon server.js",
+    "startRegtest": "npm run bitcoindRegtest && npm run serverRegtest",
+    "startTestnet": "npm run bitcoindTestnet && npm run serverTestnet",
+    "startMainnet": "npm run bitcoindMainnet && npm run serverMainnet",
+    "initRegtest": "cd bitcoin-0.19.0.1/bin && ./init.sh 2N5aWLahighZA4EVJUcmFYM528N4sk92EsX",
+    "env": "cp ./bitcoin.conf ~/.bitcoin/",
+    "stop": "cd bitcoin-0.19.0.1/bin && ./bitcoin-cli stop"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bitcore-lib": "^8.6.0",
+    "axios": "^0.19.2",
+    "bitcoinjs-lib": "^5.1.7",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "litecore-lib": "^0.13.22"
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
