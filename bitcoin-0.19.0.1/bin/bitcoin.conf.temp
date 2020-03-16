@@ -1,8 +1,8 @@
 daemon=1
 regtest=1
 listen=0
-rpcuser=pablo
-rpcpassword=pablo
+rpcuser=Zed
+rpcpassword=Zed
 server=1
 txindex=1
 [regtest]
