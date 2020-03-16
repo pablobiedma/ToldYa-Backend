@@ -1,3 +1,6 @@
+Open a terminal
+unzip the folder
+cd into the node_api folder
 Install the files
 npm i
 npm run env
@@ -8,7 +11,7 @@ npm run startRegtest (if it gives error "npm run stop" and retry)
 In another window
 npm run initRegtest
 Open the file btc.js 
-Replace "Pablo Rocks!" on line 14 with message of your choice. Don't forget the "" 
+Replace "Zed Rocks!" on line 14 with message of your choice. Don't forget the "" 
 Save the file
 now issue the command
 network=regtest node btc.js
