@@ -1,26 +1,7 @@
-# Toldya
-The binary files will not have execute permission set as you download this repo
-
-So just set it on all binaries in the bin folder
-
-to do so cd into 
-~/BTC_OP_RETURN-master/bitcoin-0.19.0.1/bin$ 
-and run: 
-chmod +x -R .
-Please not the "." at the end of the command
-
-
-
-
-how to run: 
-
-Backend:
-
-Open terminal and run:
-
-If running project first time also run:
+# BTC_OP_RETURN
+Send BTC OP_RETURN transactions to regtest, testnet and mainnet
+Install the files
 npm i
-
 
 npm run env
 
@@ -32,40 +13,51 @@ npm run startRegtest
 In another window
 npm run initRegtest
 
+Open the file btc.js 
+Replace "Zed Rocks!" on line 14 with message of your choice. Don't forget the "" 
 
-Frontend:
+Save the file
+now issue the command
 
-If running project first time also run:
-npm i
+network=regtest node btc.js
 
+The code should now sign a transaction and send it to the network
+It also fetches the transaction from the network and decodes the Hex string in OP_RETURN and displays it to the screen.
 
-How to run:
-npm start
+If you need to send another transaction.
 
-//////////////////////////////////////////////////
+npm run stop
 
+npm run bitcoindRegtest
 
-1. Generate Address 
-2. Send BTC to this address (For testnet can be done using postman)
-3. Enter that tansactionId along the Msg and submit
-4. It will do the transaction to the fixed address and return the transaction Id
+npm run initRegtest
 
-//////////////////////////////////////////////////
+put your message
 
-How to use postman: 
+network=regtest node btc.js
 
-Sending BTC to the address:
-URL:
-http://localhost:4444/api/sendtoaddress/{btc address}/1
-Example:
-http://localhost:4444/api/sendtoaddress/mh9HJw9RnJq9oXVmqwGfKWLaLzB3hr7Qbg/1
+You can also run the code on the testnet and mainnet for testnet
+if you have run the code before 
 
-Getting Transaction (If want to see transaction):
-URL:
-http://localhost:4444/api/gettransaction/{Transaction Id}
-Example:
-http://localhost:4444/api/gettransaction/6eec31940df28b3244f973770477f6a9367bc96b1f38b5ad960232a25ef5fde6
+npm run stop
 
+Heads up: It would take a some GBs of space.
 
-Cheers,
-Pablo.
+npm run bitcoindTestnet
+
+npm run startRegtest
+
+Now you should wait for sometime for the node to sync up.
+Once in sync get a Testnet address
+Fund it with TestCoin from a testnet Faucet get the TransactionID and put it in bitcoin-0.19.0.1/bin/txid put the privatekey and the address in wallet.js.
+
+Kindly observe and maintain the formatting
+
+Donot miss the "quotes" or skip the ,
+
+now run
+
+network=testnet node btc.js
+
+It should now sign and send the transaction from the privateKey you provided and send to the network
+You may check this transaction on a Blockexplorer of your choice.
