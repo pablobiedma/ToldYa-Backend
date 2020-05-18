@@ -617,76 +617,132 @@ router.get("/sendtofixedaddress/:txid/:msg", (req, resp) => {
 
 
         //J56K3e6J
+        if (process.env.network == 'mainnet') {
+          axios.get('http://localhost:4444/api/estimatesmartfee')
+            .then((res) => {
+
+              var fee = (((1 * 180) + (2 * 34) + 2) / 1000) * res.data.feerate;
+
+              const keyPairZed0 = bitcoin.ECPair.fromWIF(privKey, network)
+              const p2wpkhZed0 = bitcoin.payments.p2pkh({ pubkey: keyPairZed0.publicKey, network })
+
+              const txb = new bitcoin.TransactionBuilder(network)
+              txb.addInput(txid, 0, null, p2wpkhZed0.output)
+
+              var fixedAddress = fs.readFileSync('./fixedAddress', 'utf8');
+
+              // 2N9XeSZwrYpjTnynHspZWRhNhQ736esXdkn
+              const data = Buffer.from(message, 'utf8')
+              const embed = bitcoin.payments.embed({ data: [data] })
+              txb.addOutput(embed.output, 0)
+              txb.addOutput(fixedAddress, ((getaddress.amount * 100000000) - fee))
+              txb.sign(0, keyPairZed0, null, null, 1e8)
+              const txHex = txb.build().toHex();
+              var value;
 
 
-        axios.get('http://localhost:4444/api/estimatesmartfee')
-          .then((res) => {
+              axios.get('http://localhost:4444/api/signrawtransactionwithkey/' + txHex, {
+                "params": {
+                  "key": privKey
+                }
+              }).then((res) => {
+                axios.get('http://localhost:4444/api/sendrawtransaction/' + res.data.result.hex)
+                  .then((res) => {
+                    axios.get('http://localhost:4444/api/getrawtransaction/' + res.data.result)
+                      .then((res) => {
+                        console.log(res.data);
+                        axios.get('http://localhost:4444/api/decoderawtransaction/' + res.data.result)
+                          .then((res) => {
+                            console.log(res.data);
+                            console.log(res.data.result.vout[0].scriptPubKey.asm);
+                            var split = res.data.result.vout[0].scriptPubKey.asm.split(' ');
+                            console.log(Buffer.from(split[1], 'hex').toString());
+                            value = res.data.result.txid;
+                            resp.send(value);
 
-            var fee = (((1 * 180) + (2 * 34) + 2) / 1000) * res.data.feerate;
+                          }).catch((e) => {
+                            console.log("Decode Raw Transaction");
+                            console.log(e)
+                          });
+                      }).catch((e) => {
+                        console.log("Get Raw Transaction");
+                        console.log(e)
+                      });
+                  })
+                  .catch((e) => {
+                    console.log("Send Raw Transaction");
+                    console.log(e)
+                  });
+              }).catch((e) => {
+                console.log("Sign Raw Transaction");
+                console.log(e)
+              });
 
-            const keyPairZed0 = bitcoin.ECPair.fromWIF(privKey, network)
-            const p2wpkhZed0 = bitcoin.payments.p2pkh({ pubkey: keyPairZed0.publicKey, network })
-
-            const txb = new bitcoin.TransactionBuilder(network)
-            txb.addInput(txid, 0, null, p2wpkhZed0.output)
-
-            var fixedAddress = fs.readFileSync('./fixedAddress', 'utf8');
-
-            // 2N9XeSZwrYpjTnynHspZWRhNhQ736esXdkn
-            const data = Buffer.from(message, 'utf8')
-            const embed = bitcoin.payments.embed({ data: [data] })
-            txb.addOutput(embed.output, 0)
-            txb.addOutput(fixedAddress, ((getaddress.amount * 100000000) - fee))
-            txb.sign(0, keyPairZed0, null, null, 1e8)
-            const txHex = txb.build().toHex();
-            var value;
-
-
-            axios.get('http://localhost:4444/api/signrawtransactionwithkey/' + txHex, {
-              "params": {
-                "key": privKey
-              }
-            }).then((res) => {
-              axios.get('http://localhost:4444/api/sendrawtransaction/' + res.data.result.hex)
-                .then((res) => {
-                  axios.get('http://localhost:4444/api/getrawtransaction/' + res.data.result)
-                    .then((res) => {
-                      console.log(res.data);
-                      axios.get('http://localhost:4444/api/decoderawtransaction/' + res.data.result)
-                        .then((res) => {
-                          console.log(res.data);
-                          console.log(res.data.result.vout[0].scriptPubKey.asm);
-                          var split = res.data.result.vout[0].scriptPubKey.asm.split(' ');
-                          console.log(Buffer.from(split[1], 'hex').toString());
-                          value = res.data.result.txid;
-                          resp.send(value);
-
-                        }).catch((e) => {
-                          console.log("Decode Raw Transaction");
-                          console.log(e)
-                        });
-                    }).catch((e) => {
-                      console.log("Get Raw Transaction");
-                      console.log(e)
-                    });
-                })
-                .catch((e) => {
-                  console.log("Send Raw Transaction");
-                  console.log(e)
-                });
-            }).catch((e) => {
-              console.log("Sign Raw Transaction");
+            })
+            .catch((e) => {
+              console.log("Estimate Smart Fee");
               console.log(e)
             });
+        } else {
 
-          })
-          .catch((e) => {
-            console.log("Estimate Smart Fee");
+          var fee = 99900000;
+
+          const keyPairZed0 = bitcoin.ECPair.fromWIF(privKey, network)
+          const p2wpkhZed0 = bitcoin.payments.p2pkh({ pubkey: keyPairZed0.publicKey, network })
+
+          const txb = new bitcoin.TransactionBuilder(network)
+          txb.addInput(txid, 0, null, p2wpkhZed0.output)
+
+          var fixedAddress = fs.readFileSync('./fixedAddress', 'utf8');
+
+          // 2N9XeSZwrYpjTnynHspZWRhNhQ736esXdkn
+          const data = Buffer.from(message, 'utf8')
+          const embed = bitcoin.payments.embed({ data: [data] })
+          txb.addOutput(embed.output, 0)
+          txb.addOutput(fixedAddress, fee)
+          txb.sign(0, keyPairZed0, null, null, 1e8)
+          const txHex = txb.build().toHex();
+          var value;
+
+
+          axios.get('http://localhost:4444/api/signrawtransactionwithkey/' + txHex, {
+            "params": {
+              "key": privKey
+            }
+          }).then((res) => {
+            axios.get('http://localhost:4444/api/sendrawtransaction/' + res.data.result.hex)
+              .then((res) => {
+                axios.get('http://localhost:4444/api/getrawtransaction/' + res.data.result)
+                  .then((res) => {
+                    console.log(res.data);
+                    axios.get('http://localhost:4444/api/decoderawtransaction/' + res.data.result)
+                      .then((res) => {
+                        console.log(res.data);
+                        console.log(res.data.result.vout[0].scriptPubKey.asm);
+                        var split = res.data.result.vout[0].scriptPubKey.asm.split(' ');
+                        console.log(Buffer.from(split[1], 'hex').toString());
+                        value = res.data.result.txid;
+                        resp.send(value);
+
+                      }).catch((e) => {
+                        console.log("Decode Raw Transaction");
+                        console.log(e)
+                      });
+                  }).catch((e) => {
+                    console.log("Get Raw Transaction");
+                    console.log(e)
+                  });
+              })
+              .catch((e) => {
+                console.log("Send Raw Transaction");
+                console.log(e)
+              });
+          }).catch((e) => {
+            console.log("Sign Raw Transaction");
             console.log(e)
           });
 
-
-
+        }
 
       });
     }).catch((e) => {
