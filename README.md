@@ -10,7 +10,7 @@ and run:
 
 ### chmod +x -R .
 
-Please not the "." at the end of the command
+Please note the "." at the end of the command
 
 
 
